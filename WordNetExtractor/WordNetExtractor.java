@@ -35,12 +35,9 @@ import net.didion.jwnl.dictionary.MorphologicalProcessor;
 @SuppressWarnings("unchecked")
 public class WordNetExtractor
 {
-	private static HashMap<String, float[]> wordMap = new HashMap<String, float[]>();
-
 	private static HashMap<String, Integer> WordIndex = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> SynsetIndex = new HashMap<String, Integer>();
 	
-
 	private static int words;
 	private static int size;
 
@@ -133,12 +130,12 @@ public class WordNetExtractor
 					lemma = Shared.normalizeLemma(lemma);
 
 					// if not in corpus maybe with pos tag
-					if (!wordMap.containsKey(lemma))
+					if (!Shared.WordMap.containsKey(lemma))
 					{
 						lemma = lemma + "%" + synset.getPOS().getKey();							
 						
 						// skip words that are not in corpus
-						if (!wordMap.containsKey(lemma))
+						if (!Shared.WordMap.containsKey(lemma))
 						{
 							oov.add(lemma);
 							continue;
@@ -148,12 +145,12 @@ public class WordNetExtractor
 					++wordsInSynset;
 					for (int b = 0; b < size; b++)
 					{
-						naiveSynsetVector[b] += wordMap.get(lemma)[b];
+						naiveSynsetVector[b] += Shared.WordMap.get(lemma)[b];
 					}
 
 					if (!WordIndex.containsKey(lemma))
 					{
-						writerWords.print(lemma + " " + Shared.getVectorAsString(wordMap.get(lemma)) + "\n");
+						writerWords.print(lemma + " " + Shared.getVectorAsString(Shared.WordMap.get(lemma)) + "\n");
 						WordIndex.put(lemma, ++wordCounter);
 					}
 
@@ -233,11 +230,11 @@ public class WordNetExtractor
 		float[] vector = new float[size];
 		for (String word : gloss.split(" "))
 		{
-			if (wordMap.containsKey(word))
+			if (Shared.WordMap.containsKey(word))
 			{
 				for (int b = 0; b < size; b++)
 				{
-					vector[b] += wordMap.get(word)[b];
+					vector[b] += Shared.WordMap.get(word)[b];
 				}
 			}
 		}

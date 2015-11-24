@@ -19,7 +19,7 @@ import java.util.Map.Entry;
 
 public class Shared
 {
-	public static HashMap<String, float[]> wordMap = new HashMap<String, float[]>();
+	public static HashMap<String, float[]> WordMap = new HashMap<String, float[]>();
 
 	public static int words;
 	public static int size;
@@ -55,7 +55,7 @@ public class Shared
 					value[j] = vector;
 				}
 
-				wordMap.put(key, value);
+				WordMap.put(key, value);
             }
 
         } catch (FileNotFoundException e)
@@ -103,7 +103,7 @@ public class Shared
 					valueN[j] = value[j] / (float) len;
 				}
 
-				wordMap.put(key, value);
+				WordMap.put(key, value);
 			}
 			
 			bis.close();
@@ -132,7 +132,7 @@ public class Shared
 			dis.writeBytes(Integer.toString(size));
 			dis.writeByte('\n');
 			
-			Iterator<Entry<String, float[]>> it = wordMap.entrySet().iterator();
+			Iterator<Entry<String, float[]>> it = WordMap.entrySet().iterator();
 		    while (it.hasNext())
 		    {
 		        Map.Entry<String, float[]> pairs = (Map.Entry<String, float[]>)it.next();
@@ -193,16 +193,16 @@ public class Shared
 						valueUnknown[j] += ((float) vector / 100000);
 				}
 
-				if (wordMap.containsKey(key))
+				if (WordMap.containsKey(key))
 					continue;
 				
 				writer.print(key + " ");
 				writer.print(getVectorAsString(value) + "\n");
 					
-				wordMap.put(key, value);
+				WordMap.put(key, value);
 			}
 			
-			wordMap.put("<UNK>", valueUnknown);
+			WordMap.put("<UNK>", valueUnknown);
 			writer.print("<UNK>" + " ");
 			writer.print(getVectorAsString(valueUnknown) + "\n");
 			
@@ -217,7 +217,7 @@ public class Shared
 			e.printStackTrace();
 		}
 		
-		System.out.printf("%8d / %8d\n", wordMap.size(), words);
+		System.out.printf("%8d / %8d\n", WordMap.size(), words);
 	}
 	
 	public static void saveTxtModel(String filename)
@@ -240,7 +240,7 @@ public class Shared
 		writer.print("\n");
 		
 		// loop through all words
-		Iterator<Entry<String, float[]>> it = wordMap.entrySet().iterator();
+		Iterator<Entry<String, float[]>> it = WordMap.entrySet().iterator();
 	    while (it.hasNext())
 	    {
 	        Map.Entry<String, float[]> pairs = (Map.Entry<String, float[]>)it.next();
