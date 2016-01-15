@@ -37,9 +37,6 @@ public class WordNetExtractor
 {
 	private static HashMap<String, Integer> WordIndex = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> SynsetIndex = new HashMap<String, Integer>();
-
-	private static final int MAX_SIZE = 50;
-
 	private static Dictionary dictionary;
 
 	public static void main(String[] args) throws IOException, JWNLException
