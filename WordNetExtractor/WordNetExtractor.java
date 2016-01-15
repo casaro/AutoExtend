@@ -37,9 +37,6 @@ public class WordNetExtractor
 {
 	private static HashMap<String, Integer> WordIndex = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> SynsetIndex = new HashMap<String, Integer>();
-	
-	private static int words;
-	private static int size;
 
 	private static final int MAX_SIZE = 50;
 
@@ -119,7 +116,7 @@ public class WordNetExtractor
 				// export synset
 				writerSynsets.print(synsetId + " ");
 				
-				float[] naiveSynsetVector = new float[size];
+				float[] naiveSynsetVector = new float[Shared.size];
 				int wordsInSynset = 0;
 
 				for (Word word : synset.getWords())
@@ -143,7 +140,7 @@ public class WordNetExtractor
 					}
 					
 					++wordsInSynset;
-					for (int b = 0; b < size; b++)
+					for (int b = 0; b < Shared.size; b++)
 					{
 						naiveSynsetVector[b] += Shared.WordMap.get(lemma)[b];
 					}
@@ -168,7 +165,7 @@ public class WordNetExtractor
 				if (wordsInSynset != 0)
 				{
 					float lenNSV = 0, lenGloss = 0;
-					for (int b = 0; b < size; b++)
+					for (int b = 0; b < Shared.size; b++)
 					{
 						naiveSynsetVector[b] /= wordsInSynset;
 						lenNSV += naiveSynsetVector[b] * naiveSynsetVector[b];
@@ -176,7 +173,7 @@ public class WordNetExtractor
 					}
 					lenNSV = (float)Math.sqrt(lenNSV);
 					lenGloss = (float)Math.sqrt(lenGloss);
-					for (int b = 0; b < size; b++)
+					for (int b = 0; b < Shared.size; b++)
 					{
 						glossVector[b] *= (lenNSV / lenGloss);
 					}
@@ -184,12 +181,12 @@ public class WordNetExtractor
 				else
 				{
 					float lenGloss = 0;
-					for (int b = 0; b < size; b++)
+					for (int b = 0; b < Shared.size; b++)
 					{
 						lenGloss += glossVector[b] * glossVector[b];
 					}
 					lenGloss = (float)Math.sqrt(lenGloss);
-					for (int b = 0; b < size; b++)
+					for (int b = 0; b < Shared.size; b++)
 					{
 						glossVector[b] /= lenGloss;
 					}
@@ -227,12 +224,12 @@ public class WordNetExtractor
 	{
 		String gloss = Shared.normalizeText(synset.getGloss());
 		
-		float[] vector = new float[size];
+		float[] vector = new float[Shared.size];
 		for (String word : gloss.split(" "))
 		{
 			if (Shared.WordMap.containsKey(word))
 			{
-				for (int b = 0; b < size; b++)
+				for (int b = 0; b < Shared.size; b++)
 				{
 					vector[b] += Shared.WordMap.get(word)[b];
 				}
